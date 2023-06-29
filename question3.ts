@@ -1,8 +1,9 @@
-let count = 0;
-let number = 2;
+let count: number = 0;
+let number: number = 2;
 while (count < 10) {
-  let isPrime = true;
+  let isPrime: boolean = true;
   for (let i = 2; i < number; i++) {
+    // Determine 1st 10 Prime no.
     if (number % i === 0) {
       isPrime = false;
       break;
@@ -14,4 +15,5 @@ while (count < 10) {
   }
   number++;
 }
-// Output : 
+export default { count, number };
+// Output : 2,3,5,7,11,13,17,19,23,29

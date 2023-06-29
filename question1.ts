@@ -1,5 +1,5 @@
-function reverse(str) {
-  let str1 = "";
+function reverse(str: string) {
+  let str1: string = "";
   for (let i = str.length - 1; i >= 0; i--) {
     // Reverse a string
     str1 += str[i];
@@ -7,4 +7,5 @@ function reverse(str) {
   return str1;
 }
 console.log(reverse("Bestpeers"));
+export default reverse;
 //Output : sreeptseB
