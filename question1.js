@@ -6,7 +6,6 @@
 //     str2 += str[i]
 // }
 // console.log(str2);
-
 function reverse(str){
 let str1 = "";
  
