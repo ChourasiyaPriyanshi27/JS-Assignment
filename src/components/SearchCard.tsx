@@ -1,63 +1,65 @@
-import React, { Component } from 'react';
-import { Card } from 'react-bootstrap';
-import axios from 'axios';
-
+import React from "react";
+import { Card } from "react-bootstrap";
+import axios from "axios";
 interface ArticleCardProps {
   index: number;
 }
-
-interface ArticleCardState {
-  article: any;
-}
-
-class SearchCard extends Component<ArticleCardProps, ArticleCardState> {
+class SearchCard extends React.Component {
   constructor(props: ArticleCardProps) {
     super(props);
     this.state = {
-      article: null,
+      article: [],
     };
   }
-
   componentDidMount() {
-    const { index } = this.props;
+    const { index }: any = this.props;
     axios
       .get(
-        "https://newsapi.org/v2/top-headlines?country=us&apiKey=fd5cfcb491ef4fb5a9a335fa8674627e",
+        "https://newsapi.org/v2/everything?q=bitcoin&apiKey=69f8347f69d8489dbad11bbfdc706156",
         {
           headers: {
             Accept: "application/json",
-            Authorization: "Bearer fd5cfcb491ef4fb5a9a335fa8674627e",
+            Authorization: "Bearer 69f8347f69d8489dbad11bbfdc706156",
           },
         }
       )
       .then((res) => {
         const { articles } = res.data;
+
         if (articles && articles.length > index) {
           this.setState({ article: articles[index] });
         }
       });
   }
-
   render() {
-    const { article } = this.state;
-    if (!article) {
-      return <div>Loading...</div>;
-    }
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <div style={{ width: '380px', height: '250px', border: '1px solid red' }}>
-          <Card>
-            <Card.Body>
-              <Card.Title>{article.author}</Card.Title>
-              <Card.Text>{article.title}</Card.Text>
-              
-              <Card.Img>{article.urlToImage}</Card.Img>
+    const { article }: any = this.state;
 
-             
-            </Card.Body>
-          </Card>
+    return (
+      <>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div
+            style={{
+              width: "380px",
+              height: "250px",
+              boxShadow: "1px 2px 9px #F4AAB9",
+            }}
+          >
+            <Card.Header>
+              <h2>
+                {" "}
+                Author: {article.author !== null ? article.author : "Anonymous"}
+              </h2>
+            </Card.Header>
+            <Card.Title>Title: {article.title}</Card.Title>
+            <Card.Img
+              variant="top"
+              src={article.urlToImage}
+              style={{ width: "18rem", height: "10rem" }}
+            ></Card.Img>
+            <Card>Description:{article.description}</Card>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }

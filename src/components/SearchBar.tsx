@@ -23,20 +23,18 @@ class SearchBar extends React.Component<{}, MyState> {
       searchTerm: "",
     };
   }
-
   componentDidMount() {
     axios
       .get(
-        "https://newsapi.org/v2/everything?q=bitcoin&apiKey=fd5cfcb491ef4fb5a9a335fa8674627e",
+        "https://newsapi.org/v2/everything?q=bitcoin&apiKey=69f8347f69d8489dbad11bbfdc706156",
         {
           headers: {
             Accept: "application/json",
-            Authorization: "Bearer fd5cfcb491ef4fb5a9a335fa8674627e",
+            Authorization: "Bearer 69f8347f69d8489dbad11bbfdc706156",
           },
         }
       )
       .then((response) => {
-        console.log(response, "searchbar");
         const articles = response.data.articles;
         this.setState({ articles, filteredData: articles, isLoading: false });
       })
@@ -64,12 +62,11 @@ class SearchBar extends React.Component<{}, MyState> {
     const { searchTerm, isLoading, filteredData }: any = this.state;
 
     return (
-      <div>
+      <>
         <form method="get">
           <div className="nav">
             <Nav>
               <h3 className="p alignleft">Search Bar</h3>
-              {/* <Nav.Link className="p alignleft">Heading</Nav.Link> */}
               <button type="submit" className="p alignright">
                 Search
               </button>
@@ -83,36 +80,34 @@ class SearchBar extends React.Component<{}, MyState> {
             </Nav>
           </div>
         </form>
-       {isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            <ul>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <ul>
             <div className="row">
-                {filteredData.map((article: Article, index: number) => (
-                  <div key={index} style={{float:"right",width:"18rem"}}>
-                    <Card className="text-center" style={{ width: "18rem" }}>
-                        <Card.Header>Author: {article.author}</Card.Header>
-                        <Card.Title>Title: {article.title}</Card.Title>
-                        <Link to={"/searchcard"}>
-                          <Card.Img
-                            variant="top"
-                            src={article.urlToImage}
-                            style={{ width: "18rem", height: "10rem" }}
-                          ></Card.Img>
-                        </Link>
-                      </Card>
-                    
-                  </div>
-                ))}
-              </div>
-              </ul>
-           
-          )}
-       
-       
-      </div>
+              {filteredData.map((article: Article, index: number) => (
+                <div key={index} style={{ float: "right", width: "18rem" }}>
+                  <Card className="text-center" style={{ width: "18rem" }}>
+                    <Card.Header>
+                      Author:{" "}
+                      {article.author !== null ? article.author : "Anonymous"}
+                    </Card.Header>
+                    <Card.Title>Title: {article.title}</Card.Title>
+                    <Link to={`/search/${index}`}>
+                      <Card.Img
+                        variant="top"
+                        src={article.urlToImage}
+                        style={{ width: "18rem", height: "10rem" }}
+                      ></Card.Img>
+                    </Link>
+                  </Card>
+                </div>
+              ))}
+            </div>
+          </ul>
+        )}
+      </>
     );
   }
 }
-
 export default SearchBar;
