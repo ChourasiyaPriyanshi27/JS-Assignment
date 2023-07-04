@@ -1,63 +1,85 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import axios from "axios";
-interface ArticleCardProps {
-  index: number;
+
+interface AppProps {
+  location: any;
 }
-class SearchCard extends React.Component {
-  constructor(props: ArticleCardProps) {
+
+interface AppState {
+  author: string;
+  title: string;
+  description: string;
+  urlToImage: string;
+  content: string;
+}
+
+class SearchCard extends React.Component<AppProps, AppState> {
+  constructor(props: any) {
     super(props);
+
     this.state = {
-      article: [],
+      author: "",
+      title: "",
+      description: "",
+      urlToImage: "",
+      content: "",
     };
   }
-  componentDidMount() {
-    const { index }: any = this.props;
-    axios
-      .get(
-        "https://newsapi.org/v2/everything?q=bitcoin&apiKey=69f8347f69d8489dbad11bbfdc706156",
-        {
-          headers: {
-            Accept: "application/json",
-            Authorization: "Bearer 69f8347f69d8489dbad11bbfdc706156",
-          },
-        }
-      )
-      .then((res) => {
-        const { articles } = res.data;
-
-        if (articles && articles.length > index) {
-          this.setState({ article: articles[index] });
-        }
-      });
+  componentDidMount(): void {
+    const { author, title, description, urlToImage, content } =
+      this.props.location.state;
+    this.setState({ author: author });
+    this.setState({ title: title });
+    this.setState({ description: description });
+    this.setState({ urlToImage: urlToImage });
+    this.setState({ content: content });
   }
   render() {
-    const { article }: any = this.state;
-
     return (
       <>
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "50px",
+          }}
+        >
           <div
             style={{
               width: "380px",
-              height: "250px",
+              height: "300px",
               boxShadow: "1px 2px 9px #F4AAB9",
             }}
           >
-            <Card.Header>
-              <h2>
-                {" "}
-                Author: {article.author !== null ? article.author : "Anonymous"}
-              </h2>
-            </Card.Header>
-            <Card.Title>Title: {article.title}</Card.Title>
-            <Card.Img
-              variant="top"
-              src={article.urlToImage}
-              style={{ width: "18rem", height: "10rem" }}
-            ></Card.Img>
-            <Card>Description:{article.description}</Card>
+            {/* make a common card component */}
+            <Card>
+              <Card.Body>
+                <Card.Title>
+                  <h3>Author Name: {this.state.author}</h3>
+                </Card.Title>
+                <Card.Text>
+                  <strong>Title:</strong>
+                  {this.state.title}
+                </Card.Text>
+                <Card.Img
+                  variant="top"
+                  src={this.state.urlToImage}
+                  style={{ width: "18rem", height: "10rem" }}
+                />
+              </Card.Body>
+            </Card>
           </div>
+        </div>
+        <div style={{ marginTop: "18px" }}>
+          <Card>
+            <strong>Description:</strong>
+            {this.state.description}
+          </Card>
+          <br />
+          <Card style={{ width: "700px", marginLeft: "455px" }}>
+            <strong>Content:</strong>
+            {this.state.content}
+          </Card>
         </div>
       </>
     );

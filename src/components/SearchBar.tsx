@@ -1,7 +1,10 @@
 import React from "react";
-import axios from "axios";
+import { searchBarArticles } from "../redux/action/actions";
 import { Nav, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
 interface Article {
   title: string;
   author: string;
@@ -24,23 +27,8 @@ class SearchBar extends React.Component<{}, MyState> {
     };
   }
   componentDidMount() {
-    axios
-      .get(
-        "https://newsapi.org/v2/everything?q=bitcoin&apiKey=69f8347f69d8489dbad11bbfdc706156",
-        {
-          headers: {
-            Accept: "application/json",
-            Authorization: "Bearer 69f8347f69d8489dbad11bbfdc706156",
-          },
-        }
-      )
-      .then((response) => {
-        const articles = response.data.articles;
-        this.setState({ articles, filteredData: articles, isLoading: false });
-      })
-      .catch((error) => {
-        console.error("Error Fetching API:", error);
-      });
+    //@ts-ignore
+    this.props.searchBarArticles();
   }
 
   handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +37,6 @@ class SearchBar extends React.Component<{}, MyState> {
       this.filterData();
     });
   };
-
   filterData = () => {
     const { searchTerm, articles } = this.state;
     const filteredData = articles.filter((article) =>
@@ -59,8 +46,7 @@ class SearchBar extends React.Component<{}, MyState> {
   };
 
   render() {
-    const { searchTerm, isLoading, filteredData }: any = this.state;
-
+    const { searchTerm, isLoading, searchBarArticles }: any = this.state;
     return (
       <>
         <form method="get">
@@ -85,24 +71,33 @@ class SearchBar extends React.Component<{}, MyState> {
         ) : (
           <ul>
             <div className="row">
-              {filteredData.map((article: Article, index: number) => (
-                <div key={index} style={{ float: "right", width: "18rem" }}>
-                  <Card className="text-center" style={{ width: "18rem" }}>
-                    <Card.Header>
-                      Author:{" "}
-                      {article.author !== null ? article.author : "Anonymous"}
-                    </Card.Header>
-                    <Card.Title>Title: {article.title}</Card.Title>
-                    <Link to={`/search/${index}`}>
-                      <Card.Img
-                        variant="top"
-                        src={article.urlToImage}
-                        style={{ width: "18rem", height: "10rem" }}
-                      ></Card.Img>
-                    </Link>
-                  </Card>
-                </div>
-              ))}
+              {searchBarArticles?.searchBarArticles?.map(
+                (article: Article, index: number) => (
+                  <div
+                    key={index}
+                    style={{
+                      float: "right",
+                      width: "18rem",
+                      marginRight: "50px",
+                    }}
+                  >
+                    <Card className="text-center" style={{ width: "18rem" }}>
+                      <Card.Header>
+                        Author:{" "}
+                        {article.author !== null ? article.author : "Anonymous"}
+                      </Card.Header>
+                      <Card.Title>Title: {article.title}</Card.Title>
+                      <Link to={{ pathname: "search", state: article }}>
+                        <Card.Img
+                          variant="top"
+                          src={article.urlToImage}
+                          style={{ width: "18rem", height: "10rem" }}
+                        ></Card.Img>
+                      </Link>
+                    </Card>
+                  </div>
+                )
+              )}
             </div>
           </ul>
         )}
@@ -110,4 +105,17 @@ class SearchBar extends React.Component<{}, MyState> {
     );
   }
 }
-export default SearchBar;
+
+const mapStateToProps = (state: any) => {
+  return {
+    searchBarArticles: state.searchBarArticles.searchBarArticles,
+    isLoading: state.isLoading,
+    error: state.error,
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return bindActionCreators({ searchBarArticles }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
