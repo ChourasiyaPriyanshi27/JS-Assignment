@@ -29,14 +29,14 @@ class Article extends React.Component {
                 <Row className="justify-content-md-center" key={index}>
                   <div>
                     <br />
-                    <Card className="text-center" style={{ width: "18rem" }}>
+                    <Card className="text-center">
                       <Link to={{ pathname: "/article", state: auth }}>
                         <Card.Header>Top News: {auth.source.name}</Card.Header>
                       </Link>
-                      <Card.Img
+                      <Card.Img 
+                      className="articleI"
                         variant="top"
                         src={auth.urlToImage}
-                        style={{ width: "18rem", height: "10rem" }}
                       />
                     </Card>
                   </div>

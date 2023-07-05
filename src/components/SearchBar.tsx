@@ -39,14 +39,18 @@ class SearchBar extends React.Component<{}, MyState> {
   };
   filterData = () => {
     const { searchTerm, articles } = this.state;
+    console.log("statekjfhf",articles)
+   
     const filteredData = articles.filter((article) =>
-      article.title.toLowerCase().includes(searchTerm.toLowerCase())
+    article.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
     this.setState({ filteredData });
   };
 
   render() {
-    const { searchTerm, isLoading, searchBarArticles }: any = this.state;
+    const { searchTerm, isLoading, searchArticles }: any = this.props;
+
+ 
     return (
       <>
         <form method="get">
@@ -70,35 +74,32 @@ class SearchBar extends React.Component<{}, MyState> {
           <p>Loading...</p>
         ) : (
           <ul>
-            <div className="row">
-              {searchBarArticles?.searchBarArticles?.map(
+              {searchArticles?.map(
                 (article: Article, index: number) => (
                   <div
                     key={index}
-                    style={{
-                      float: "right",
-                      width: "18rem",
-                      marginRight: "50px",
-                    }}
+                   className="searchbar"
                   >
-                    <Card className="text-center" style={{ width: "18rem" }}>
-                      <Card.Header>
+                    <Card >
+                      <Card.Header className="searchbarA">
                         Author:{" "}
                         {article.author !== null ? article.author : "Anonymous"}
                       </Card.Header>
-                      <Card.Title>Title: {article.title}</Card.Title>
+                      <p className="searchbart">Title: {article.title}</p>
                       <Link to={{ pathname: "search", state: article }}>
                         <Card.Img
                           variant="top"
                           src={article.urlToImage}
-                          style={{ width: "18rem", height: "10rem" }}
+                        //  style={{ width: "18rem", height: "10rem",marginRight:"50px" }}
+                         className="searchbarI"
+                         
                         ></Card.Img>
                       </Link>
                     </Card>
                   </div>
                 )
               )}
-            </div>
+          
           </ul>
         )}
       </>
@@ -107,10 +108,10 @@ class SearchBar extends React.Component<{}, MyState> {
 }
 
 const mapStateToProps = (state: any) => {
-  return {
-    searchBarArticles: state.searchBarArticles.searchBarArticles,
-    isLoading: state.isLoading,
-    error: state.error,
+ return {
+    searchArticles: state.searchArticles?.articles?.articles ,
+    isLoading: state.searchArticles?.isLoading,
+    error: state.searchArticles?.error,
   };
 };
 
@@ -118,4 +119,4 @@ const mapDispatchToProps = (dispatch: any) => {
   return bindActionCreators({ searchBarArticles }, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default connect(mapStateToProps,mapDispatchToProps)(SearchBar);

@@ -36,23 +36,54 @@
     transform: rotate(360deg);
   }
 }
-.nav{
+.nav {
   background-color: #caeef8;
-  height:50px;
-  justify-content: center; 
-  margin-top: 20px; 
+  height: 50px;
+  justify-content: center;
+  margin-top: 20px;
 }
-.p{
+.p {
   text-align: center;
   margin-top: 15px;
 }
 .alignleft {
-	float: left;
+  float: left;
 }
 .alignright {
-	float: right;
+  float: right;
 }
-.ad{
- margin-top: 50px;
+.ad {
+  margin-top: 50px;
 }
-
+.pdiv {
+  display: "flex";
+  justify-content: "center";
+  margin-top: "50px";
+}
+.cdiv {
+  width: "380px";
+  height: "300px";
+  box-shadow: "1px 2px 9px #F4AAB9";
+}
+.searchbar {
+float: right;
+  width: "18rem";
+  margin-left: "2%";
+}
+.searchbart{
+ justify-content: center;
+ width: 220px;
+ margin-left: 30px;
+}
+.searchbarI{
+  height: 200px;
+  width: 80%;
+}
+.searchbarA{
+  margin-right:40px;
+  margin-top: 15px;
+}
+.articleI{
+  height: 200px;
+  width: 100%;
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import CommonCard from "../common/Card";
 
 interface AppProps {
   location: any;
@@ -28,62 +28,24 @@ class SearchCard extends React.Component<AppProps, AppState> {
   componentDidMount(): void {
     const { author, title, description, urlToImage, content } =
       this.props.location.state;
-    this.setState({ author: author });
-    this.setState({ title: title });
-    this.setState({ description: description });
-    this.setState({ urlToImage: urlToImage });
-    this.setState({ content: content });
+    this.setState({
+      author: author,
+      title: title,
+      description: description,
+      urlToImage: urlToImage,
+      content: content,
+    });
   }
   render() {
     return (
       <>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "50px",
-          }}
-        >
-          <div
-            style={{
-              width: "380px",
-              height: "300px",
-              boxShadow: "1px 2px 9px #F4AAB9",
-            }}
-          >
-            {/* make a common card component */}
-            <Card>
-              <Card.Body>
-                <Card.Title>
-                  <h3>Author Name: {this.state.author}</h3>
-                </Card.Title>
-                <Card.Text>
-                  <strong>Title:</strong>
-                  {this.state.title}
-                </Card.Text>
-                <Card.Img
-                  variant="top"
-                  src={this.state.urlToImage}
-                  style={{ width: "18rem", height: "10rem" }}
-                />
-              </Card.Body>
-            </Card>
-          </div>
-        </div>
-        <div style={{ marginTop: "18px" }}>
-          <Card>
-            <strong>Description:</strong>
-            {this.state.description}
-          </Card>
-          <br />
-          <Card style={{ width: "700px", marginLeft: "455px" }}>
-            <strong>Content:</strong>
-            {this.state.content}
-          </Card>
-        </div>
+        <CommonCard author={this.state.author}
+        title={this.state.title}
+        description={this.state.description}
+        urlToImage={this.state.urlToImage}
+        content={this.state.content} />
       </>
     );
   }
 }
-
 export default SearchCard;
