@@ -90,9 +90,8 @@ class SearchBar extends React.Component<{}, MyState> {
                         <Card.Img
                           variant="top"
                           src={article.urlToImage}
-                        //  style={{ width: "18rem", height: "10rem",marginRight:"50px" }}
-                         className="searchbarI"
-                         
+                          style={{ width: "18rem", height: "10rem",marginRight:"50px" }}
+                         //className="searchbarI"
                         ></Card.Img>
                       </Link>
                     </Card>

@@ -22,6 +22,7 @@ class Article extends React.Component {
     }
     return (
       <div>
+        <h2>Top News</h2>
         <ul>
           <Marquee>
             {articles?.articles?.map((auth: any, index: any) => {
