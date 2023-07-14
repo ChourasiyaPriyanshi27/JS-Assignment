@@ -2,26 +2,27 @@
   "name": "jest-enzyme-project",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.4.0",
+    "axios": "1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-router-dom": "^6.14.1",
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "babel index.js -d dist",
+    "eject": "react-scripts eject",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\""
   },
   "jest": {
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ]
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -42,7 +43,12 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.22.8",
+    "@babel/preset-env": "^7.22.7",
+    "@babel/preset-react": "^7.22.5",
     "@cfaester/enzyme-adapter-react-18": "^0.7.0",
-    "enzyme-to-json": "^3.6.2"
+    "babel-jest": "^29.6.1",
+    "enzyme-to-json": "^3.6.2",
+    "web-vitals": "^3.4.0"
   }
 }

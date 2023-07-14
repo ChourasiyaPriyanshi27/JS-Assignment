@@ -1,4 +1,3 @@
-import { wrap } from "@cfaester/enzyme-adapter-react-18/dist/enzyme-adapter-utils";
 import Blog from "./Blog";
 import {shallow} from 'enzyme'
 
@@ -27,7 +26,7 @@ describe("Blog check" , () => {
     expect(wrapper.find('.my-button').hasClass('btn-primary')).toBe(true)
   })
 
-  it("is check " , () => {
+  it("is check", () => {
     let wrapper = shallow(<Blog />)
     expect(wrapper.is('.mainCls')).toBe(true)
   })

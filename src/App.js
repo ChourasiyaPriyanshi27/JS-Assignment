@@ -1,11 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
+
 import { Article } from './Article';
+import LifeCycleCom from './LifeCycle';
 
 function App() {
   return (
     <div className="App">
       <Article />
+      <LifeCycleCom />
     </div>
   );
 }
